@@ -177,9 +177,6 @@ class DbService {
       return null;
     }
   }
-  
-
-  async deleteRowById(id) {
   async updateTransaksiById(id, id_produk, quantity, tanggal) {
     try {
       const hargaSatuan = await new Promise((resolve, reject) => {
