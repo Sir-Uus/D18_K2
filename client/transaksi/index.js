@@ -104,9 +104,6 @@ function insertRowIntoTable(data) {
   let tableHtml = "<tr>";
   for (var key in data) {
     if (data.hasOwnProperty(key)) {
-      if (key === "dateAdded") {
-        data[key] = new Date(data[key]).toLocaleString();
-      }
       tableHtml += `<td>${data[key]}</td>`;
     }
   }

@@ -111,6 +111,31 @@ class DbService {
       return null;
     }
   }
+  async insertNewTransaksi(idproduk, quantity, tanggal,hargatotal,id_karyawan) {
+    try {
+      const insertId = await new Promise((resolve, reject) => {
+        const query = "INSERT INTO datatransaksi (idproduk, quantity, tanggal,hargatotal,id_karyawan) VALUES (?,?,?,?,?);";
+        connection.query(query, [idproduk, quantity, tanggal,hargatotal,id_karyawan], (err, result) => {
+          if (err) {
+            reject(new Error(err.message));
+          } else {
+            resolve(result.insertId);
+          }
+        });
+      });
+      return {
+        id: insertId,
+        idproduk : idproduk,
+        quantity : quantity,
+        tanggal : tanggal,
+        hargatotal :hargatotal,
+        id_karyawan :id_karyawan
+      };
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
 
   async deleteRowById(id) {
     try {

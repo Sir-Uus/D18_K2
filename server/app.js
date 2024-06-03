@@ -24,6 +24,21 @@ app.post("/insertproduk", (request, response) => {
       response.status(500).send(err);
     });
 });
+app.post("/inserttransaksi", (request, response) => {
+  const { idproduk, quantity, tanggal,hargatotal,id_karyawan } = request.body;
+  const db = dbService.getDbServiceInstance();
+
+  const result = db.insertNewTransaksi(idproduk, quantity, tanggal,hargatotal,id_karyawan);
+
+  result
+    .then((data) => {
+      response.redirect("/transaksi");
+    })
+    .catch((err) => {
+      console.log(err);
+      response.status(500).send(err);
+    });
+});
 
 // read
 app.get("/getAllProduk", (request, response) => {
