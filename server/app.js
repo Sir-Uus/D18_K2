@@ -47,6 +47,21 @@ app.post("/insertinvestor", (request, response) => {
       response.status(500).send(err);
     });
 });
+app.post("/insertkaryawan", (request, response) => {
+  const { namakaryawan, tgllahir, jeniskelamin, alamat, noTlp } = request.body;
+  const db = dbService.getDbServiceInstance();
+
+  const result = db.insertNewKaryawan(namakaryawan, tgllahir, jeniskelamin, alamat, noTlp);
+
+  result
+    .then((data) => {
+      response.redirect("/karyawan");
+    })
+    .catch((err) => {
+      console.log(err);
+      response.status(500).send(err);
+    });
+});
 
 // read
 app.get("/getAllProduk", (request, response) => {

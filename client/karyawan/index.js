@@ -36,23 +36,44 @@ updateBtn.onclick = function () {
     });
 };
 
-const addBtn = document.querySelector("#add-name-btn");
+document.querySelector("#form-karyawan").addEventListener("submit", function (event) {
+  event.preventDefault();
 
-addBtn.onclick = function () {
-  const nameInput = document.querySelector("#name-input");
-  const name = nameInput.value;
-  nameInput.value = "";
+  // Ambil nilai dari input form kecuali `id_produk`
+  const namakaryawan = document.querySelector("#namakaryawan").value;
+  const tgllahir = document.querySelector("#tgllahir").value;
+  const jeniskelamin = document.querySelector("#jeniskelamin").value;
+  const alamat = document.querySelector("#alamat").value;
+  const noTlp = document.querySelector("#noTlp").value;
 
-  fetch("http://localhost:2222/insertinvestor", {
+  fetch("http://localhost:2222/insertkaryawan", {
     headers: {
       "Content-type": "application/json",
     },
     method: "POST",
-    body: JSON.stringify({ name: name }),
+    body: JSON.stringify({
+      namakaryawan: namakaryawan,
+      tgllahir: tgllahir,
+      jeniskelamin: jeniskelamin,
+      alamat: alamat,
+      noTlp: noTlp,
+    }),
   })
     .then((response) => response.json())
-    .then((data) => insertRowIntoTable(data.data));
-};
+    .then((data) => {
+      insertRowIntoTable(data.data);
+    })
+    .then((data) => {
+      window.location.href = "/karyawan";
+    });
+
+  // Bersihkan form setelah submit
+  document.querySelector("#namakaryawan").value = "";
+  document.querySelector("#tgllahir").value = "";
+  document.querySelector("#jeniskelamin").value = "";
+  document.querySelector("#alamat").value = "";
+  document.querySelector("#noTlp").value = "";
+});
 
 function deleteRowById(id) {
   fetch("http://localhost:2222/delete/" + id, {
