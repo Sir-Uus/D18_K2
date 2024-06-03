@@ -89,8 +89,8 @@ function loadHTMLTable(data) {
     tableHtml += `<td>${jenis_kelamin}</td>`;
     tableHtml += `<td>${alamat}</td>`;
     tableHtml += `<td>${noTlp}</td>`;
-    tableHtml += `<td><button class="btn btn-primary" data-id=${id}>Edit</td>`;
-    tableHtml += `<td><button class="btn btn-danger" data-id=${id}>Delete</td>`;
+    tableHtml += `<td><button class="btn btn-primary" data-id=${id}>Edit</button>
+                  <button class="btn btn-danger" data-id=${id}>Delete</button></td>`;
     tableHtml += "</tr>";
   });
 
@@ -110,8 +110,8 @@ function insertRowIntoTable(data) {
       tableHtml += `<td>${data[key]}</td>`;
     }
   }
-  tableHtml += `<td><button class="btn btn-warning" data-id=${data.id}>Edit</td>`;
-  tableHtml += `<td><button class="btn btn-danger" data-id=${data.id}>Delete</td>`;
+  tableHtml += `<td><button class="btn btn-primary" data-id=${data.id}>Edit</button>
+                  <button class="btn btn-danger" data-id=${data.id}>Delete</button></td>`;
   tableHtml += "</tr>";
 
   if (isTableData) {
