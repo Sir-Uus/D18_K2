@@ -179,6 +179,33 @@ class DbService {
       return null;
     }
   }
+
+  async insertNewKaryawan(namakaryawan, tgllahir, jeniskelamin, alamat, noTlp) {
+    console.log( namakaryawan, tgllahir, jeniskelamin, alamat, noTlp)
+    try {
+      const insertId = await new Promise((resolve, reject) => {
+        const query = "INSERT INTO data_karyawan (nama_karyawan, tgl_lahir, jenis_kelamin, alamat, noTlp) VALUES (?,?,?,?,?);";
+        connection.query(query, [namakaryawan, tgllahir, jeniskelamin, alamat, noTlp], (err, result) => {
+          if (err) {
+            reject(new Error(err.message));
+          } else {
+            resolve(result.insertId);
+          }
+        });
+      });
+      return {
+        id: insertId,
+        namakaryawan: namakaryawan,
+        tgllahir: tgllahir,
+        jeniskelamin: jeniskelamin,
+        alamat: alamat,
+        noTlp: noTlp,
+      };
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
   
 
   async deleteRowById(id) {
