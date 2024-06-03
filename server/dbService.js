@@ -110,7 +110,7 @@ class DbService {
       return null;
     }
   }
-  //INSERT UPDATE DELETE TRANSAKSI===================================================================================================
+  //INSET,DELETE,UPDATE============================================================================================================================
   async insertNewTransaksi(idproduk, quantity, tanggal) {
     try {
       const hargaSatuan = await new Promise((resolve, reject) => {
@@ -138,7 +138,6 @@ class DbService {
           }
         });
       });
-
       return {
         id: insertId,
         idproduk: idproduk,
@@ -151,29 +150,31 @@ class DbService {
       return null;
     }
   }
-  async deleteRowById(id) {
-    try {
-      id = parseInt(id, 10);
-      const response = await new Promise((resolve, reject) => {
-        const query = "DELETE FROM datatransaksi WHERE id = ?;";
-        connection.query(query, [id], (err, result) => {
-          if (err) reject(new Error(err.message));
-          resolve(result ? result.affectedRows : 0);
-        });
-      });
-      return response === 1;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  }
   async updateTransaksiById(id, id_produk, quantity, tanggal) {
     try {
+      const hargaSatuan = await new Promise((resolve, reject) => {
+        const query = "SELECT hargasatuan FROM dataproduk WHERE id = ?;";
+        connection.query(query, [id_produk], (err, result) => {
+          if (err) {
+            reject(new Error(err.message));
+          } else {
+            if (result.length > 0) {
+              resolve(result[0].hargasatuan);
+            } else {
+              reject(new Error("Produk tidak ditemukan"));
+            }
+          }
+        });
+      });
+      const hargatotal = hargaSatuan * quantity;
       const response = await new Promise((resolve, reject) => {
-        const query = "UPDATE datatransaksi SET idproduk = ?, quantity = ?, tanggal = ? WHERE id = ?;";
-        connection.query(query, [id_produk, quantity, tanggal, id], (err, result) => {
-          if (err) reject(new Error(err.message));
-          resolve(result ? result.affectedRows : 0);
+        const query = "UPDATE datatransaksi SET idproduk = ?, quantity = ?, tanggal = ?, hargatotal = ? WHERE id = ?;";
+        connection.query(query, [id_produk, quantity, tanggal, hargatotal, id], (err, result) => {
+          if (err) {
+            reject(new Error(err.message));
+          } else {
+            resolve(result ? result.affectedRows : 0);
+          }
         });
       });
       return response === 1;
@@ -182,7 +183,43 @@ class DbService {
       return false;
     }
   }
-//======================================================================================================================================================
+  async deleteRowById(id) {
+    try {
+        id = parseInt(id, 10);
+        const response = await new Promise((resolve, reject) => {
+            const deleteQuery = "DELETE FROM datatransaksi WHERE id = ?;";
+            connection.query(deleteQuery, [id], (err, result) => {
+                if (err) reject(new Error(err.message));
+                resolve(result ? result.affectedRows : 0);
+            });
+        });
+        if (response === 1) {
+            const remainingIds = await new Promise((resolve, reject) => {
+                const selectQuery = "SELECT id FROM datatransaksi;";
+                connection.query(selectQuery, (err, rows) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(rows.map(row => row.id));
+                });
+            });
+            if (remainingIds.length > 0) {
+                const maxId = Math.max(...remainingIds);
+                await new Promise((resolve, reject) => {
+                    const resetQuery = `ALTER TABLE datatransaksi AUTO_INCREMENT = ${maxId + 1};`;
+                    connection.query(resetQuery, (err, result) => {
+                        if (err) reject(new Error(err.message));
+                        resolve(result);
+                    });
+                });
+            }
+        }
+        return response === 1;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+//===========================================================================================================================================
+
 
 
 

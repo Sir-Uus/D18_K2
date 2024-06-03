@@ -8,13 +8,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // create
-
 app.post("/insertproduk", (request, response) => {
   const { namaproduk, stock, hargasatuan } = request.body;
   const db = dbService.getDbServiceInstance();
-
   const result = db.insertNewProduk(namaproduk, stock, hargasatuan);
-
   result
     .then((data) => {
       response.redirect("/produk");
@@ -27,9 +24,7 @@ app.post("/insertproduk", (request, response) => {
 app.post("/inserttransaksi", (request, response) => {
   const { idproduk, quantity, tanggal,hargatotal } = request.body;
   const db = dbService.getDbServiceInstance();
-
   const result = db.insertNewTransaksi(idproduk, quantity, tanggal,hargatotal);
-
   result
     .then((data) => {
       response.redirect("/transaksi");
@@ -42,9 +37,7 @@ app.post("/inserttransaksi", (request, response) => {
 app.post("/insertinvestor", (request, response) => {
   const { nama, jumlah } = request.body;
   const db = dbService.getDbServiceInstance();
-
   const result = db.insertNewInvestor(nama, jumlah);
-
   result
     .then((data) => {
       response.redirect("/investor");
@@ -58,43 +51,39 @@ app.post("/insertinvestor", (request, response) => {
 // read
 app.get("/getAllProduk", (request, response) => {
   const db = dbService.getDbServiceInstance();
-
   const result = db.getAllDataProduk();
-
   result.then((data) => response.json({ success: true, data: data })).catch((err) => console.log(err));
 });
-
 app.get("/getAllTransaksi", (request, response) => {
   const db = dbService.getDbServiceInstance();
-
   const result = db.getAllDataTransaksi();
-
   result.then((data) => response.json({ success: true, data: data })).catch((err) => console.log(err));
 });
-
 app.get("/getAllKaryawan", (request, response) => {
   const db = dbService.getDbServiceInstance();
-
   const result = db.getAllDataKaryawan();
-
   result.then((data) => response.json({ success: true, data: data })).catch((err) => console.log(err));
 });
-
 app.get("/getAllInvestor", (request, response) => {
   const db = dbService.getDbServiceInstance();
-
   const result = db.getAllDataInvestor();
-
   result.then((data) => response.json({ success: true, data: data })).catch((err) => console.log(err));
 });
+
+
 
 // update
 app.patch("/update", (request, response) => {
   const { id, name } = request.body;
   const db = dbService.getDbServiceInstance();
-
   const result = db.updateNameById(id, name);
-
+  result.then((data) => response.json({ success: true })).catch((err) => console.log(err));
+});
+app.patch("/updateTransaksi/:id", (request, response) => {
+  const { id } = request.params;
+  const { idproduk, quantity, tanggal, hargatotal } = request.body;
+  const db = dbService.getDbServiceInstance();
+  const result = db.updateTransaksiById(id, idproduk, quantity, tanggal, hargatotal);
   result.then((data) => response.json({ success: true })).catch((err) => console.log(err));
 });
 
@@ -102,48 +91,43 @@ app.patch("/update", (request, response) => {
 app.delete("/delete/:id", (request, response) => {
   const { id } = request.params;
   const db = dbService.getDbServiceInstance();
-
   const result = db.deleteRowById(id);
-
   result.then((data) => response.json({ success: true })).catch((err) => console.log(err));
 });
-// Delete a transaction
 app.delete("/delete/:id", (req, res) => {
   const { id } = req.params;
   const db = DbService.getDbServiceInstance();
   const result = db.deleteRowById(id);
-
   result
     .then(data => res.json({ success: data }))
     .catch(err => console.log(err));
 });
 
-app.patch("/update", (req, res) => {
-  const { id, id_produk, quantity, tanggal } = req.body;
-  const db = DbService.getDbServiceInstance();
-  const result = db.updateTransaksiById(id, id_produk, quantity, tanggal);
 
-  result
-    .then(data => res.json({ success: data }))
-    .catch(err => console.log(err));
-});
 
 
 // search
 app.get("/search/:name", (request, response) => {
   const { name } = request.params;
   const db = dbService.getDbServiceInstance();
-
   const result = db.searchByName(name);
-
   result.then((data) => response.json({ success: true, data: data })).catch((err) => console.log(err));
 });
 
+
+
+
+
+
+
+
+
+
+//tampilan
 app.use(express.static("../client"));
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/client/index.html");
 });
-
 app.get("/produk", (req, res) => {
   res.sendFile(__dirname + "/client/produk/index.html");
 });
