@@ -39,6 +39,21 @@ app.post("/inserttransaksi", (request, response) => {
       response.status(500).send(err);
     });
 });
+app.post("/insertinvestor", (request, response) => {
+  const { nama, jumlah } = request.body;
+  const db = dbService.getDbServiceInstance();
+
+  const result = db.insertNewInvestor(nama, jumlah);
+
+  result
+    .then((data) => {
+      response.redirect("/investor");
+    })
+    .catch((err) => {
+      console.log(err);
+      response.status(500).send(err);
+    });
+});
 
 // read
 app.get("/getAllProduk", (request, response) => {

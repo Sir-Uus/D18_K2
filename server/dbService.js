@@ -136,6 +136,28 @@ class DbService {
       return null;
     }
   }
+  async insertNewInvestor(nama, jumlah) {
+    try {
+      const insertId = await new Promise((resolve, reject) => {
+        const query = "INSERT INTO data_investor (nama, jumlah) VALUES (?,?);";
+        connection.query(query, [nama, jumlah], (err, result) => {
+          if (err) {
+            reject(new Error(err.message));
+          } else {
+            resolve(result.insertId);
+          }
+        });
+      });
+      return {
+        id: insertId,
+        nama : nama,
+        jumlah : jumlah
+      };
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
 
   async deleteRowById(id) {
     try {
