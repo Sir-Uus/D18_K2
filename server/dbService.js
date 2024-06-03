@@ -181,10 +181,10 @@ class DbService {
   }
 
   async insertNewKaryawan(namakaryawan, tgllahir, jeniskelamin, alamat, noTlp) {
-    console.log( namakaryawan, tgllahir, jeniskelamin, alamat, noTlp)
+    // console.log( namakaryawan, tgllahir, jeniskelamin, alamat, noTlp)
     try {
       const insertId = await new Promise((resolve, reject) => {
-        const query = "INSERT INTO data_karyawan (nama_karyawan, tgl_lahir, jenis_kelamin, alamat, noTlp) VALUES (?,?,?,?,?);";
+        const query = "INSERT INTO data_karyawan (nama_karyawan, tgl_lahir, jenis_kelamin, alamat, noTlp) VALUES (?, ?, ?, ?, ?);";
         connection.query(query, [namakaryawan, tgllahir, jeniskelamin, alamat, noTlp], (err, result) => {
           if (err) {
             reject(new Error(err.message));
