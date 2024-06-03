@@ -20,10 +20,26 @@ app.post("/insert", (request, response) => {
 });
 
 // read
-app.get("/getAll", (request, response) => {
+app.get("/getAllProduk", (request, response) => {
   const db = dbService.getDbServiceInstance();
 
-  const result = db.getAllData();
+  const result = db.getAllDataProduk();
+
+  result.then((data) => response.json({ success: true, data: data })).catch((err) => console.log(err));
+});
+
+app.get("/getAllTransaksi", (request, response) => {
+  const db = dbService.getDbServiceInstance();
+
+  const result = db.getAllDataTransaksi();
+
+  result.then((data) => response.json({ success: true, data: data })).catch((err) => console.log(err));
+});
+
+app.get("/getAllKaryawan", (request, response) => {
+  const db = dbService.getDbServiceInstance();
+
+  const result = db.getAllDataKaryawan();
 
   result.then((data) => response.json({ success: true, data: data })).catch((err) => console.log(err));
 });

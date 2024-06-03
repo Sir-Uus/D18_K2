@@ -24,52 +24,53 @@ class DbService {
     return instance ? instance : new DbService();
   }
 
-  async getAllData() {
+  async getAllDataProduk() {
     try {
-      const query1 = "SELECT * FROM names;";
-      const query2 = "SELECT * FROM dataproduk;";
-      const query3 = "SELECT * FROM datatransaksi;";
-      const query4 = "SELECT * FROM datainvestor;";
-      const query5 = "SELECT * FROM datakaryawan;";
-
-      const [results1, results2, results3] = await Promise.all([
-          new Promise((resolve, reject) => {
-              connection.query(query1, (err, results) => {
-                  if (err) reject(new Error(err.message));
-                  resolve(results);
-              });
-          }),
-          new Promise((resolve, reject) => {
-              connection.query(query2, (err, results) => {
-                  if (err) reject(new Error(err.message));
-                  resolve(results);
-              });
-          }),
-          new Promise((resolve, reject) => {
-              connection.query(query3, (err, results) => {
-                  if (err) reject(new Error(err.message));
-                  resolve(results);
-              });
-          }),
-          new Promise((resolve, reject) => {
-              connection.query(query4, (err, results) => {
-                  if (err) reject(new Error(err.message));
-                  resolve(results);
-              });
-          }),
-          new Promise((resolve, reject) => {
-              connection.query(query5, (err, results) => {
-                  if (err) reject(new Error(err.message));
-                  resolve(results);
-              });
-          })
-      ]);
-
-      return { results1, results2, results3 };
-  } catch (error) {
+      const response = await new Promise((resolve, reject) => {
+        const query = "SELECT * FROM dataproduk;";
+        connection.query(query, (err, results) => {
+          if (err) reject(new Error(err.message));
+          resolve(results);
+        });
+      });
+      return response;
+    } catch (error) {
       console.log(error);
-    }
-}
+      return [];
+    }
+  }
+
+  async getAllDataTransaksi() {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query = "SELECT * FROM datatransaksi;";
+        connection.query(query, (err, results) => {
+          if (err) reject(new Error(err.message));
+          resolve(results);
+        });
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  }
+
+  async getAllDataKaryawan() {
+    try {
+      const response = await new Promise((resolve, reject) => {
+        const query = "SELECT * FROM data_karyawan;";
+        connection.query(query, (err, results) => {
+          if (err) reject(new Error(err.message));
+          resolve(results);
+        });
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  }
 
   async insertNewName(name) {
     try {
