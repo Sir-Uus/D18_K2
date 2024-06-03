@@ -107,6 +107,28 @@ app.delete("/delete/:id", (request, response) => {
 
   result.then((data) => response.json({ success: true })).catch((err) => console.log(err));
 });
+// Delete a transaction
+app.delete("/delete/:id", (req, res) => {
+  const { id } = req.params;
+  const db = DbService.getDbServiceInstance();
+  const result = db.deleteRowById(id);
+
+  result
+    .then(data => res.json({ success: data }))
+    .catch(err => console.log(err));
+});
+
+app.patch("/update", (req, res) => {
+  const { id, id_produk, quantity, tanggal } = req.body;
+  const db = DbService.getDbServiceInstance();
+  const result = db.updateTransaksiById(id, id_produk, quantity, tanggal);
+
+  result
+    .then(data => res.json({ success: data }))
+    .catch(err => console.log(err));
+});
+
+
 // search
 app.get("/search/:name", (request, response) => {
   const { name } = request.params;

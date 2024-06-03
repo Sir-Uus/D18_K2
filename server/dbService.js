@@ -15,15 +15,15 @@ const connection = mysql.createConnection({
 connection.connect((err) => {
   if (err) {
     console.log(err.message);
+  } else {
+    console.log("db " + connection.state);
   }
-  console.log("db " + connection.state);
 });
 
 class DbService {
   static getDbServiceInstance() {
     return instance ? instance : new DbService();
   }
-
   async getAllDataProduk() {
     try {
       const response = await new Promise((resolve, reject) => {
@@ -87,7 +87,6 @@ class DbService {
       return [];
     }
   }
-
   async insertNewProduk(namaproduk, stock, hargasatuan) {
     try {
       const insertId = await new Promise((resolve, reject) => {
@@ -111,30 +110,7 @@ class DbService {
       return null;
     }
   }
-  async insertNewTransaksi(idproduk, quantity, tanggal,hargatotal) {
-    try {
-      const insertId = await new Promise((resolve, reject) => {
-        const query = "INSERT INTO datatransaksi (idproduk, quantity, tanggal,hargatotal) VALUES (?,?,?,?);";
-        connection.query(query, [idproduk, quantity, tanggal,hargatotal], (err, result) => {
-          if (err) {
-            reject(new Error(err.message));
-          } else {
-            resolve(result.insertId);
-          }
-        });
-      });
-      return {
-        id: insertId,
-        idproduk : idproduk,
-        quantity : quantity,
-        tanggal : tanggal,
-        hargatotal :hargatotal
-      };
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
-  }
+  //INSERT UPDATE DELETE TRANSAKSI===================================================================================================
   async insertNewTransaksi(idproduk, quantity, tanggal) {
     try {
       const hargaSatuan = await new Promise((resolve, reject) => {
@@ -151,13 +127,9 @@ class DbService {
           }
         });
       });
-    
-      // Hitung total harga
       const hargatotal = hargaSatuan * quantity;
-    
-      // Masukkan transaksi ke dalam database
       const insertId = await new Promise((resolve, reject) => {
-        const query = "INSERT INTO datatransaksi (idproduk, quantity, tanggal, hargatotal) VALUES (?, ?, ?, ?, ?);";
+        const query = "INSERT INTO datatransaksi (idproduk, quantity, tanggal, hargatotal) VALUES (?, ?, ?, ?);";
         connection.query(query, [idproduk, quantity, tanggal, hargatotal], (err, result) => {
           if (err) {
             reject(new Error(err.message));
@@ -166,7 +138,7 @@ class DbService {
           }
         });
       });
-    
+
       return {
         id: insertId,
         idproduk: idproduk,
@@ -179,34 +151,29 @@ class DbService {
       return null;
     }
   }
-  
-
   async deleteRowById(id) {
     try {
       id = parseInt(id, 10);
       const response = await new Promise((resolve, reject) => {
-        const query = "DELETE FROM names WHERE id =?";
+        const query = "DELETE FROM datatransaksi WHERE id = ?;";
         connection.query(query, [id], (err, result) => {
           if (err) reject(new Error(err.message));
-          resolve(result.affectedRows);
+          resolve(result ? result.affectedRows : 0);
         });
       });
-
       return response === 1;
     } catch (error) {
       console.log(error);
       return false;
     }
   }
-
-  async updateNameById(id, name) {
+  async updateTransaksiById(id, id_produk, quantity, tanggal) {
     try {
-      id = parseInt(id, 10);
       const response = await new Promise((resolve, reject) => {
-        const query = "UPDATE names SET name =? WHERE id =?";
-        connection.query(query, [name, id], (err, result) => {
+        const query = "UPDATE datatransaksi SET idproduk = ?, quantity = ?, tanggal = ? WHERE id = ?;";
+        connection.query(query, [id_produk, quantity, tanggal, id], (err, result) => {
           if (err) reject(new Error(err.message));
-          resolve(result.affectedRows);
+          resolve(result ? result.affectedRows : 0);
         });
       });
       return response === 1;
@@ -215,6 +182,19 @@ class DbService {
       return false;
     }
   }
+//======================================================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
 
   async searchByName(name) {
     try {
