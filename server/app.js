@@ -8,13 +8,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // create
-app.get("/prduk", (request, response) => {});
 
-app.post("/insert", (request, response) => {
-  const { name } = request.body;
+app.post("/insertproduk", (request, response) => {
+  const { namaproduk, stock, hargasatuan } = request.body;
   const db = dbService.getDbServiceInstance();
 
-  const result = db.insertNewName(name);
+  const result = db.insertNewProduk(namaproduk, stock, hargasatuan);
 
   result.then((data) => response.json({ success: true, data: data })).catch((err) => console.log(err));
 });
@@ -40,6 +39,14 @@ app.get("/getAllKaryawan", (request, response) => {
   const db = dbService.getDbServiceInstance();
 
   const result = db.getAllDataKaryawan();
+
+  result.then((data) => response.json({ success: true, data: data })).catch((err) => console.log(err));
+});
+
+app.get("/getAllInvestor", (request, response) => {
+  const db = dbService.getDbServiceInstance();
+
+  const result = db.getAllDataInvestor();
 
   result.then((data) => response.json({ success: true, data: data })).catch((err) => console.log(err));
 });

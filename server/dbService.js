@@ -72,20 +72,36 @@ class DbService {
     }
   }
 
-  async insertNewName(name) {
+  async getAllDataInvestor() {
     try {
-      const dateAdded = new Date();
+      const response = await new Promise((resolve, reject) => {
+        const query = "SELECT * FROM data_investor;";
+        connection.query(query, (err, results) => {
+          if (err) reject(new Error(err.message));
+          resolve(results);
+        });
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  }
+
+  async insertNewProduk(namaproduk, stock, hargasatuan) {
+    try {
       const insertId = await new Promise((resolve, reject) => {
-        const query = "INSERT INTO names (name, date_added) VALUES (?,?);";
-        connection.query(query, [name, dateAdded], (err, result) => {
+        const query = "INSERT INTO dataproduk (namaproduk, stock, hargasatuan) VALUES (?,?,?);";
+        connection.query(query, [namaproduk, stock, hargasatuan], (err, result) => {
           if (err) reject(new Error(err.message));
           resolve(result.insertId);
         });
       });
       return {
         id: insertId,
-        name: name,
-        dateAdded: dateAdded,
+        namaproduk: namaproduk,
+        stock: stock,
+        hargasatuan: hargasatuan,
       };
     } catch (error) {
       console.log(error);
