@@ -36,23 +36,38 @@ updateBtn.onclick = function () {
     });
 };
 
-const addBtn = document.querySelector("#add-name-btn");
+document.querySelector("#form-produk").addEventListener("submit", function (event) {
+  event.preventDefault();
 
-addBtn.onclick = function () {
-  const nameInput = document.querySelector("#name-input");
-  const name = nameInput.value;
-  nameInput.value = "";
+  // Ambil nilai dari input form kecuali `id_produk`
+  const namaProduk = document.querySelector("#nama_produk").value;
+  const stok = document.querySelector("#stok").value;
+  const hargaSatuan = document.querySelector("#harga_satuan").value;
 
-  fetch("http://localhost:2222/insert", {
+  fetch("http://localhost:2222/insertproduk", {
     headers: {
       "Content-type": "application/json",
     },
     method: "POST",
-    body: JSON.stringify({ name: name }),
+    body: JSON.stringify({
+      nama_produk: namaProduk,
+      stok: stok,
+      harga_satuan: hargaSatuan,
+    }),
   })
     .then((response) => response.json())
-    .then((data) => insertRowIntoTable(data.data));
-};
+    .then((data) => {
+      insertRowIntoTable(data.data);
+    })
+    .then((data) => {
+      window.location.href = "/produk";
+    });
+
+  // Bersihkan form setelah submit
+  document.querySelector("#nama_produk").value = "";
+  document.querySelector("#stok").value = "";
+  document.querySelector("#harga_satuan").value = "";
+});
 
 function deleteRowById(id) {
   fetch("http://localhost:2222/delete/" + id, {
@@ -102,9 +117,6 @@ function insertRowIntoTable(data) {
   let tableHtml = "<tr>";
   for (var key in data) {
     if (data.hasOwnProperty(key)) {
-      if (key === "dateAdded") {
-        data[key] = new Date(data[key]).toLocaleString();
-      }
       tableHtml += `<td>${data[key]}</td>`;
     }
   }

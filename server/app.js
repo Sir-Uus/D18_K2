@@ -15,7 +15,14 @@ app.post("/insertproduk", (request, response) => {
 
   const result = db.insertNewProduk(namaproduk, stock, hargasatuan);
 
-  result.then((data) => response.json({ success: true, data: data })).catch((err) => console.log(err));
+  result
+    .then((data) => {
+      response.redirect("/produk");
+    })
+    .catch((err) => {
+      console.log(err);
+      response.status(500).send(err);
+    });
 });
 
 // read

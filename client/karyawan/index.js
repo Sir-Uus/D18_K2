@@ -43,7 +43,7 @@ addBtn.onclick = function () {
   const name = nameInput.value;
   nameInput.value = "";
 
-  fetch("http://localhost:2222/insert", {
+  fetch("http://localhost:2222/insertinvestor", {
     headers: {
       "Content-type": "application/json",
     },

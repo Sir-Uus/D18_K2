@@ -93,8 +93,11 @@ class DbService {
       const insertId = await new Promise((resolve, reject) => {
         const query = "INSERT INTO dataproduk (namaproduk, stock, hargasatuan) VALUES (?,?,?);";
         connection.query(query, [namaproduk, stock, hargasatuan], (err, result) => {
-          if (err) reject(new Error(err.message));
-          resolve(result.insertId);
+          if (err) {
+            reject(new Error(err.message));
+          } else {
+            resolve(result.insertId);
+          }
         });
       });
       return {

@@ -66,13 +66,13 @@
         <div class="card shadow-mb4">
           <div class="card-header bg-warning text-light"><h4>Produk</h4></div>
           <div class="card-body">
-            <form action="/insertproduk" method="post">
+            <form action="/insertproduk" method="post" id="form-produk">
               <div class="row mb-3">
                 <div class="col-md-3">
                   <label for="">ID produk</label>
                 </div>
                 <div class="col-md-8">
-                  <input type="number" name="id_produk" id="id_produk" class="form-control" />
+                  <input type="number" name="id_produk" id="id_produk" class="form-control" readonly />
                 </div>
               </div>
               <div class="row mb-3">
@@ -80,7 +80,7 @@
                   <label for="">Nama produk</label>
                 </div>
                 <div class="col-md-8">
-                  <input type="text" name="nama_produk" id="nama_produk" class="form-control" />
+                  <input type="text" name="namaproduk" id="namaproduk" class="form-control" />
                 </div>
               </div>
               <div class="row mb-3">
@@ -88,7 +88,7 @@
                   <label for="">Stok </label>
                 </div>
                 <div class="col-md-8">
-                  <input type="number " name="stok" id="stok" class="form-control" />
+                  <input type="number " name="stock" id="stock" class="form-control" />
                 </div>
               </div>
               <div class="row mb-3">
@@ -96,7 +96,7 @@
                   <label for="">Harga Satuan</label>
                 </div>
                 <div class="col-md-8">
-                  <input type="text" name="harga_satuan" id="harga_satuan" class="form-control" />
+                  <input type="text" name="hargasatuan" id="hargasatuan" class="form-control" />
                 </div>
               </div>
               <input type="submit" name="submit" id="btn-add" class="btn btn-primary" />
