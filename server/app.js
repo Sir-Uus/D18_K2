@@ -65,4 +65,14 @@ app.get("/", (req, res) => {
 app.get("/produk", (req, res) => {
   res.sendFile(__dirname + "/client/produk/index.html");
 });
+app.get("/produk", (req, res) => {
+  res.sendFile(__dirname + "/client/karyawan/index.html");
+});
+app.get("/produk", (req, res) => {
+  res.sendFile(__dirname + "/client/transaki/index.html");
+});
+app.get("/produk", (req, res) => {
+  res.sendFile(__dirname + "/client/karyawan/index.html");
+});
+
 app.listen(5000, () => console.log("app is running"));
