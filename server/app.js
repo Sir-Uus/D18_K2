@@ -8,6 +8,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // create
+app.get("/prduk", (request, response) => {});
+
 app.post("/insert", (request, response) => {
   const { name } = request.body;
   const db = dbService.getDbServiceInstance();
@@ -58,5 +60,9 @@ app.get("/search/:name", (request, response) => {
 app.use(express.static("../client"));
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/client/index.html");
+});
+
+app.get("/produk", (req, res) => {
+  res.sendFile(__dirname + "/client/produk/index.html");
 });
 app.listen(5000, () => console.log("app is running"));
