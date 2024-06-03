@@ -3,10 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>home</title>
+    <link rel="stylesheet" href="../dist/css/bootstrap.min.css" />
+    <title>Sejarah Toko Produk Pak Budi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #1f4037, #99f2c8);
+            color: white;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.8);
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+           
+        }
+        a {
+            display: flex;
+            justify-content: center;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        p {
+            line-height: 1.6;
+        }
+    </style>
 </head>
 <body>
-    <img src="https://i.scdn.co/image/ab67616d0000b273506ee21822b0b8d7d1216852" alt="">
-    <h1>kontakmu berapa bang</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+        <div class="container-fluid">
+          <!-- Brand/logo -->
+          <a class="navbar-brand" href="#">Dashboard</a>
+          <!-- Toggler/collapsibe Button -->
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <!-- Navbar links -->
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/home">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/produk">Produk</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/transaksi">Transaksi</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/karyawan">Karyawan</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/investor">Investor</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Dropdown </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+            </ul>
+            <!-- Search form -->
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+      <script src="../dist/js/bootstrap.bundle.min.js"></script>
+    
+      <div class="container">
+        <h1>Sejarah Toko Produk Pak Budi</h1>
+        <a href=""><img class="wrapper" src="https://i.scdn.co/image/ab67616d0000b273506ee21822b0b8d7d1216852" alt="Foto Toko Produk Pak Budi"></a>
+        
+        <h2>Tentang Toko Kami</h2>
+        <p>Toko Produk Pak Budi didirikan pada tahun 1990 di Jakarta. Sejak itu, kami telah melayani komunitas lokal dengan berbagai produk berkualitas. Kami bangga menjadi bagian dari sejarah dan budaya lokal.</p>
+        <h2>Misi Kami</h2>
+        <p>Misi kami adalah untuk menyediakan produk berkualitas dengan harga terjangkau, sambil memastikan pengalaman belanja yang menyenangkan bagi pelanggan kami.</p>
+    </div>
 </body>
 </html>
