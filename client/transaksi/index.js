@@ -81,14 +81,14 @@ function loadHTMLTable(data) {
   }
 
   let tableHtml = "";
-  data.forEach(function ({ id, idproduk, quantity, tanggal, hargatotal, id_karyawan }) {
+  data.forEach(function ({ id, idproduk, quantity, tanggal, hargatotal }) {
     tableHtml += "<tr>";
     tableHtml += `<td>${id}</td>`;
     tableHtml += `<td>${idproduk}</td>`;
     tableHtml += `<td>${quantity}</td>`;
     tableHtml += `<td>${tanggal}</td>`;
     tableHtml += `<td>${hargatotal}</td>`;
-    tableHtml += `<td>${id_karyawan}</td>`;
+   
     tableHtml += `<td><button class="btn btn-primary" data-id=${id}>Edit</button>
                   <button class="btn btn-danger" data-id=${id}>Delete</button></td>`;
     tableHtml += "</tr>";

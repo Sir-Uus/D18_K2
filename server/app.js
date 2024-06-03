@@ -25,10 +25,10 @@ app.post("/insertproduk", (request, response) => {
     });
 });
 app.post("/inserttransaksi", (request, response) => {
-  const { idproduk, quantity, tanggal,hargatotal,id_karyawan } = request.body;
+  const { idproduk, quantity, tanggal,hargatotal } = request.body;
   const db = dbService.getDbServiceInstance();
 
-  const result = db.insertNewTransaksi(idproduk, quantity, tanggal,hargatotal,id_karyawan);
+  const result = db.insertNewTransaksi(idproduk, quantity, tanggal,hargatotal);
 
   result
     .then((data) => {
