@@ -75,4 +75,4 @@ app.get("/investor", (req, res) => {
   res.sendFile(__dirname + "/client/investor/index.html");
 });
 
-app.listen(5000, () => console.log("app is running"));
+app.listen(2222, () => console.log("app is running"));
