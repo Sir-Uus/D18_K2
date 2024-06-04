@@ -272,7 +272,7 @@ class DbService {
       return response;
     } catch (error) {
       console.log(error);
-      return [];
+    return false;
     }
   }
 }

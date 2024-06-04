@@ -11,12 +11,12 @@ document.addEventListener("DOMContentLoaded", function () {
       handleEditRow(event.target.dataset.id);
     }
   });
-});
+  });
 
-const updateBtn = document.querySelector("#update-row-btn");
+  const updateBtn = document.querySelector("#update-row-btn");
 
-updateBtn.onclick = function () {
-  const updateNameInput = document.querySelector("#update-name-input");
+  updateBtn.onclick = function () {
+    const updateNameInput = document.querySelector("#update-name-input");
 
   fetch("http://localhost:2222/update", {
     method: "PATCH",
@@ -32,7 +32,7 @@ updateBtn.onclick = function () {
     .then((data) => {
       if (data.success) {
         location.reload();
-      }
+}
     });
 };
 
