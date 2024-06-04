@@ -47,21 +47,6 @@ app.post("/insertinvestor", (request, response) => {
       response.status(500).send(err);
     });
 });
-app.post("/insertkaryawan", (request, response) => {
-  const { namakaryawan, tgllahir, jeniskelamin, alamat, noTlp } = request.body;
-  const db = dbService.getDbServiceInstance();
-
-  const result = db.insertNewKaryawan(namakaryawan, tgllahir, jeniskelamin, alamat, noTlp);
-
-  result
-    .then((data) => {
-      response.redirect("/karyawan");
-    })
-    .catch((err) => {
-      console.log(err);
-      response.status(500).send(err);
-    });
-});
 
 // read
 app.get("/getAllProduk", (request, response) => {
@@ -85,8 +70,6 @@ app.get("/getAllInvestor", (request, response) => {
   result.then((data) => response.json({ success: true, data: data })).catch((err) => console.log(err));
 });
 
-
-
 // update
 app.patch("/update", (request, response) => {
   const { id, name } = request.body;
@@ -99,6 +82,13 @@ app.patch("/updateTransaksi/:id", (request, response) => {
   const { idproduk, quantity, tanggal, hargatotal } = request.body;
   const db = dbService.getDbServiceInstance();
   const result = db.updateTransaksiById(id, idproduk, quantity, tanggal, hargatotal);
+  result.then((data) => response.json({ success: true })).catch((err) => console.log(err));
+});
+app.patch("/updateInvestor/:id", (request, response) => {
+  const { id } = request.params;
+  const { nama, jumlah } = request.body;
+  const db = dbService.getDbServiceInstance();
+  const result = db.updateInvestorById(id, nama, jumlah);
   result.then((data) => response.json({ success: true })).catch((err) => console.log(err));
 });
 
