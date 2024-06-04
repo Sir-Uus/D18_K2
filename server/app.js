@@ -111,7 +111,7 @@ app.delete("/delete/:id", (request, response) => {
 });
 app.delete("/delete/:id", (req, res) => {
   const { id } = req.params;
-  const db = DbService.getDbServiceInstance();
+  const db = dbService.getDbServiceInstance();
   const result = db.deleteRowById(id);
   result
     .then(data => res.json({ success: data }))
